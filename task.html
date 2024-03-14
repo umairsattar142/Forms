@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SignIn and Signup Form</title>
+    <style>
+        body {
+            background-color: rgb(91, 93, 97);
+            color: black;
+            font-family: Arial, sans-serif;
+        }
+    
+        .container {
+            text-align: center;
+            margin-top: 60px;
+        }
+    
+        button {
+            padding: 10px 20px;
+            margin: 0 10px;
+            background-color: black;
+
+        }
+    
+        .forms-container {
+            display: none;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+    
+        .form {
+            background-color: #f2f2f2;
+            padding: 20px;
+            border-radius: 10px;
+            width: 300px;
+        }
+    
+        input {
+            display: block;
+            width: 100%;
+            margin-bottom: 10px;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+    
+        button[type="submit"] {
+            background-color: black;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    
+        button[type="submit"]:hover {
+            background-color: #ADD8E6;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <br><h1><u>WELCOME TO Online WEBCOURSE</u></h1><br>
+        <button id="signin-btn"style="color: white;">Sign In</button>
+        <button id="signup-btn" style="color: white;">Sign Up</button>
+    </div>
+
+    <div class="forms-container" id="forms-container">
+        <form id="signin-form" class="form">
+            <h2 style="color: black;"><u>Sign In</u></h2>
+            <input type="text" id="signin-username" placeholder="Username">
+            <input type="password" id="signin-password" placeholder="Password">
+            <button type="submit">Sign In</button>
+        </form>
+
+        <form id="signup-form" class="form">
+            <h2 style="color:black;"><u>Sign Up</u></h2>
+            <input type="text" id="signup-firstname" placeholder="First Name">
+            <input type="text" id="signup-lastname" placeholder="Last Name">
+            <input type="email" id="signup-email" placeholder="Email">
+            <input type="password" id="signup-password" placeholder="Password">
+            <input type="password" id="signup-confirm-password" placeholder="Confirm Password">
+            <input type="tel" id="signup-phone" placeholder="Phone Number">
+            <input type="date" id="signup-birthdate" placeholder="Birth Date">
+            <input type="number" id="signup-age" placeholder="Age">
+            <button type="submit">Sign Up</button>
+        </form>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $("#signin-btn").click(function() {
+                $("#forms-container").css("display", "flex");
+                $("#signin-form").css("display", "block");
+                $("#signup-form").css("display", "none");
+            });
+
+            $("#signup-btn").click(function() {
+                $("#forms-container").css("display", "flex");
+                $("#signup-form").css("display", "block");
+                $("#signin-form").css("display", "none");
+            });
+
+            $("#signin-form").submit(function(event) {
+                event.preventDefault();
+                const username = $("#signin-username").val().trim();
+                const password = $("#signin-password").val().trim();
+
+                if (username === "" || password === "") {
+                    alert("Please fill in all fields.");
+                    return;
+                }
+            });
+
+            $("#signup-form").submit(function(event) {
+                event.preventDefault();
+                const firstName = $("#signup-firstname").val().trim();
+                const lastName = $("#signup-lastname").val().trim();
+                const email = $("#signup-email").val().trim();
+                const password = $("#signup-password").val().trim();
+                const confirmPassword = $("#signup-confirm-password").val().trim();
+                const phone = $("#signup-phone").val().trim();
+                const birthdate = $("#signup-birthdate").val().trim();
+                const age = $("#signup-age").val().trim();
+
+                if (firstName === "" || lastName === "" || email === "" || password === "" || confirmPassword === "" || phone === "" || birthdate === "" || age === "") {
+                    alert("Please fill in all fields.");
+                    return;
+                }
+
+                if (password !== confirmPassword) {
+                    alert("Passwords do not match");
+                    return;
+                }
+
+                if (!isValidEmail(email)) {
+                    alert("Invalid email address");
+                    return;
+                }
+
+                if (!isValidPassword(password)) {
+                    alert("Password must contain at least one special character and one numeric character");
+                    return;
+                }
+
+                if (isNaN(age) || age < 18 || age > 120) {
+                    alert("Invalid age. Age must be a number between 18 and 100.");
+                    return;
+                }
+            });
+
+            function isValidEmail(email) {
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                return emailRegex.test(email);
+            }
+
+            function isValidPassword(password) {
+                const passwordRegex = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,}$/;
+                return passwordRegex.test(password);
+            }
+        });
+    </script>
+</body>
+</html>
